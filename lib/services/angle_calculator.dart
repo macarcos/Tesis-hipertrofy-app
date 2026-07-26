@@ -27,50 +27,25 @@ const double goblet_kneeTooHigh = 110;
 const double goblet_kneeUp      = 155;
 
 // ── PRESS MILITAR CON MANCUERNAS (de FRENTE, sentado, ambos brazos) ──────────
-// Mide el ángulo del CODO (hombro-codo-muñeca) de cada brazo. De frente y
-// sentado, ML Kit ve los dos brazos completos y detecta estable.
-// VALORES REALES medidos por Marcos:
-//   - Abajo (mancuernas en hombros): 40-55°
-//   - Arriba (brazos estirados): 135-165°
-//   - En medio (subiendo, no completó): 56-134°
-//   - Muy abajo (bajó demasiado, riesgo hombro): < 39°
 const double press_codoAbajo    =  55; // ← AJUSTA: codo <= este = posición baja (hombros). Tus 40-55
 const double press_codoArriba   = 145; // ← AJUSTA: codo >= este = brazos estirados arriba (cuenta). Tus 145-165
 const double press_codoMuyAbajo =  39; // ← AJUSTA: codo < este = bajó demasiado (riesgo hombro)
 const double press_codoNoSube   = 145; // ← AJUSTA: si solo llega a menos de esto y baja = no estiró arriba
-// Error de espalda arqueada hacia atrás (inclinación del torso vs vertical):
+
 const double press_espaldaInclinacion = 22; // ← AJUSTA: inclinación > este (grados) = cuida espalda
+
 // MUÑECAS MUY ABIERTAS (riesgo de hombro/manguito rotador). La apertura normal
-// cambia según la altura: arriba los brazos van juntos (X chico), abajo/medio
-// están más abiertos (X grande). Por eso hay un umbral por zona. Valores REALES
-// de Marcos (X = ancho muñecas / ancho hombros):
-//   Abajo (reposo):   normal 1.70-2.20 → peligro si X > 2.20
-//   Medio camino:     normal 2.00-2.40 → peligro si X > 2.40
-//   Arriba (estirado):normal 1.00-1.65 → peligro si X > 1.65
 const double press_aperturaAbajo  = 2.20; // ← AJUSTA: abajo, X > este = muy abierto
 const double press_aperturaMedio  = 2.40; // ← AJUSTA: medio, X > este = muy abierto
 const double press_aperturaArriba = 1.80; // ← AJUSTA: arriba, X > este = muy abierto
 const double press_confMin = 0.8; // ← AJUSTA: confianza mínima de los puntos del brazo
 
 // ── ELEVACIONES LATERALES (de FRENTE, de pie) ────────────────────────────────
-// Mide la ALTURA del codo respecto al hombro (no depende de la muñeca, que la
-// mancuerna podría tapar). Pero SÍ usa la muñeca para ver si el brazo está
-// estirado (ángulo del codo).
-//   - Abajo: codo cerca de la cadera (brazos pegados al cuerpo)
-//   - Arriba correcto: codo al nivel del hombro
-//   - Error: codo MÁS arriba del hombro (manguito rotador)
-// ÁNGULO DEL HOMBRO (cadera-hombro-codo) — lo que se ve en pantalla:
-//   Brazos abajo (reposo): ángulo CHICO (~5-15°)
-//   Brazos arriba al hombro (correcto): ángulo MEDIO (~45-55°)
-//   Brazos MÁS arriba (peligro): ángulo > 55° = manguito rotador
-// Valores reales medidos por Marcos. Con un poco de margen.
 const double elev_anguloAbajo   =  30; // ← AJUSTA: ángulo < este = brazos abajo (reposo)
 const double elev_anguloArriba  =  85; // ← AJUSTA: ángulo >= este = brazos arriba (cuenta la rep). Tus 45-55 con margen
 const double elev_anguloMuyAlto =  100; // ← AJUSTA: ángulo > este = subió demasiado (manguito rotador)
 const double elev_codoDoblado    = 140; // ← AJUSTA: codo < este = brazo doblado (mala forma)
 const double elev_confMin = 0.7; // ← AJUSTA: confianza mínima de los puntos del brazo
-// Confianza MÁS ALTA para detectar "brazo doblado". Si el fondo se parece a la
-// piel y la muñeca no se ve clara, NO marca el error (mejor callar que fallar).
 const double elev_codoConfMin = 0.8; // ← AJUSTA: sube a 0.85 si sigue fallando con fondos así
 
 // ── ESTADO DEL BRAZO (genérico para curl y elevaciones) ──────────────────────
