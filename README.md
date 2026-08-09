@@ -31,3 +31,7 @@ Para levantar este proyecto, asegúrate de tener el [SDK de Flutter](https://flu
 1. Clona el repositorio e instala las dependencias:
    ```bash
    flutter pub get
+Configura las variables de entorno necesarias para las claves de la IA y la conexión a la base de datos.
+
+Ejecuta la aplicación en tu emulador o dispositivo físico:
+flutter run
